@@ -62,7 +62,7 @@
             <input type="checkbox" name="required" value="required"><span>Required</span>
           </div>
 
-          <!-- Split button -->
+          <!-- Question Dropdown Menu -->
           <div class="btn-group">
             <button type="button" class="btn btn-default">Add Question</button>
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -89,12 +89,42 @@
           <label>Enter your question:</label>
           <input type="text" class="form-control" placeholder="">
 
-          <div class="btn-yes">
+          <div class="btn-yes-no">
             <p>Yes</p>
             <span class="glyphicon glyphicon-arrow-right"></span> 
           </div>
 
-          <div class="btn-yes">
+          <!-- child panel container -->
+          <div class="panel panel-child-container">
+
+            <div class="panel-header">
+              <span class="glyphicon glyphicon-remove"></span>
+              <div class="question-title">
+                <p>Title</p>
+                <span class="glyphicon glyphicon-pencil"></span>
+              </div>
+            </div>
+
+            <div class="question-template">
+              <!-- Question Dropdown Menu -->
+              <div class="btn-group">
+                <button type="button" class="btn btn-default">Add Question</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Header Text</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Menu of Steps</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Yes-No Question</a></li>
+                </ul>
+              </div>
+                </div>
+              </div>
+              <!-- end of child panel container -->
+          <div class="btn-yes-no">
             <p>No</p>
             <span class="glyphicon glyphicon-arrow-right"></span> 
           </div>

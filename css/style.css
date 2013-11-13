@@ -116,11 +116,10 @@
 
 .panel-question {
   margin: 20px auto 0 auto;
-  width: 80%;
+  width: 92%;
 }
 
-.btn-yes,
-.btn-no {
+.btn-yes-no {
   cursor: pointer;
   border: 1px solid #CCC;
   border-radius: 4px;
@@ -129,18 +128,62 @@
   background: #FFF;
 }
 
-.btn-yes p,
-.btn-no p {
+.btn-yes-no p {
   margin: 10px;
   display: inline-block;
   text-transform: uppercase;
 }
 
-.btn-yes span,
-.btn-no span {
+.btn-yes-no span {
   color: #0088CC;
   font-size: 24px;
   position: absolute;
   top: 8px;
   right: 10px;
+}
+
+/*
+ * Child Panel Question Markup
+ */
+
+ .panel-child-container.panel {
+  border-width: 0;
+ }
+
+.panel-child-container .panel-header {
+  background-color: #66B8FF;
+  padding: 5px;
+  position: relative;
+}
+
+.panel-header .glyphicon-remove {
+  color: #FFF;
+  font-size: 16px;
+}
+
+.question-title {
+  background: #007FEE;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 4px;
+}
+
+.question-title p {
+  color: #FFF;
+  font-size: 16px;
+  display: inline-block;
+  margin-bottom: 0;
+  width: 250px;
+  margin-left: 10px;
+}
+
+.question-title span {
+  color: #FFF;
+  font-size: 16px;
+}
+
+.question-template {
+  padding: 20px 0;
+  text-align: center;
 }
