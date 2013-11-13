@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AppVisit Builder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    <div class="navbar navbar-default">
+      <div class="navbar-inner">
+        <div class="container">
+
+          <div class="pull-left">
+            <span class="brand" href="#">AppVisit Builder</span>
+            <br>
+          </div>
+
+          <div class="nav-meta pull-left">
+            <p>MEP1</p>
+            <p>Steve Hernandez</p>
+          </div>
+
+          <div class="pull-right">
+            <ul class="nav">
+              <li class="pull-left" style="margin-top:7px;">
+                <button class="btn btn-success" id="save-template-draft">SaveDraft</button>
+              </li>
+              <li class="pull-left" style="margin-top:7px;">
+                <button class="btn btn-primary" style="margin-left: 12px;">Publish</button>
+              </li>
+              <li class="pull-left" style="margin-top:7px;">
+                <button class="btn" style="margin-left:12px; margin-right:12px">Close Builder</button>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div> <!-- navbar -->
+  
+    <div class="question-container">
+
+      <div class="question-header-parent">
+        <h3>Exam</h3>
+      </div>
+
+
+      <div class="panel panel-default">
+        <div class="panel-body question-select-container">
+
+          <div class="required-check">
+            <input type="checkbox" name="required" value="required"><span>Required</span>
+          </div>
+
+          <!-- Split button -->
+          <div class="btn-group">
+            <button type="button" class="btn btn-default">Add Question</button>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Header Text</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Menu of Steps</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Yes-No Question</a></li>
+            </ul>
+          </div>
+
+          <button type="submit" class="btn btn-default preview">Preview</button>
+
+        </div> <!-- end of panel body -->
+      </div> <!-- end of panel -->
+
+      <div class="panel panel-default">
+        <div class="panel-body panel-question">
+
+          <div class="input-group">
+            <span class="input-group-addon">Enter your question:</span>
+            <input type="text" class="form-control" placeholder="">
+          </div>
+
+          <div class="btn-yes">
+            <p>Yes</p>
+            <span class="glyphicon glyphicon-arrow-right"></span> 
+          </div>
+
+          <div class="btn-yes">
+            <p>No</p>
+            <span class="glyphicon glyphicon-arrow-right"></span> 
+          </div>
+
+        </div>
+      </div> <!-- end of panel -->
+
+    </div><!-- end question-container -->
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
