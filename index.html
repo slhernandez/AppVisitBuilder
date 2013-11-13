@@ -86,10 +86,8 @@
       <div class="panel panel-default">
         <div class="panel-body panel-question">
 
-          <div class="input-group">
-            <span class="input-group-addon">Enter your question:</span>
-            <input type="text" class="form-control" placeholder="">
-          </div>
+          <label>Enter your question:</label>
+          <input type="text" class="form-control" placeholder="">
 
           <div class="btn-yes">
             <p>Yes</p>
@@ -111,5 +109,12 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script type="text/javascript" src="js/builder.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+          builder.init();
+      });
+    </script>
   </body>
 </html>
