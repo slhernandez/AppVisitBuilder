@@ -184,6 +184,50 @@
 }
 
 .question-template {
-  padding: 20px 0;
+  position: relative;
+  padding: 0;
   text-align: center;
+}
+
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #66B8FF;
+  position: absolute;
+  top: -45px;
+  left: 50%;
+}
+
+.question-builder-container {
+  padding: 20px 0;
+  width: 90%;
+  margin: 0 auto;
+  min-height: 300px;
+  background: #ffffff;
+  text-align: left;
+}
+
+.question-builder-container label {
+  margin-left: 65px;
+}
+
+.question-builder-container input {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.dropdown-header {
+  padding: 20px 0;
+  border-bottom: 1px solid #EEE;
+}
+
+.question-builder-container .list-group {
+  width: 50%;
+  margin: 20px auto;
+}
+
+.question-builder-container .list-group span {
+  float: right;
 }

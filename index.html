@@ -106,30 +106,52 @@
             </div>
 
             <div class="question-template">
-              <!-- Question Dropdown Menu -->
-              <div class="btn-group">
-                <button type="button" class="btn btn-default">Add Question</button>
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  <span class="caret"></span>
-                  <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">Header Text</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">Menu of Steps</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">Yes-No Question</a></li>
-                </ul>
-              </div>
+              <div class="arrow-up"></div>
+
+              <div class="dropdown-header">
+
+                <!-- Question Dropdown Menu -->
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default">Add Question</button>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Header Text</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Menu of Steps</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Yes-No Question</a></li>
+                  </ul>
                 </div>
+
+              </div> <!--end of dropdown-header -->
+
+              <div class="question-builder-container">
+
+                <label>Prompt:</label>
+                <input type="text" class="form-control" placeholder="">
+
+                <ul class="list-group">
+                  <li class="list-group-item">Name of Step 1 <span class="glyphicon glyphicon-arrow-right"></span></li>
+                  <li class="list-group-item">Name of Step 2 <span class="glyphicon glyphicon-arrow-right"></span></li>
+                  <li class="list-group-item">Click to add another item</li>
+                </ul>
+
               </div>
-              <!-- end of child panel container -->
+
+            </div> <!-- end of question-template -->
+
+
+          </div> <!-- end of panel-child-container -->
+
           <div class="btn-yes-no">
             <p>No</p>
             <span class="glyphicon glyphicon-arrow-right"></span> 
           </div>
 
-        </div>
+        </div> <!-- end of panel-question -->
       </div> <!-- end of panel -->
 
     </div><!-- end question-container -->
