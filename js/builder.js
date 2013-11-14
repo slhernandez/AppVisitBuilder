@@ -1,13 +1,17 @@
 var builder = {
   init: function() {
     console.log('builder.js is loaded...')
-
+    var _this = this;
     // Setup events
     $('.btn-yes').on('click', function(e) {
       if ( $(this).next().is(':hidden') ) {
+      // load the YesNoQuestion template
+      _this.renderYesNoQuestion("add");
         $(this).next().slideDown("200");
       } else {
-        $(this).next().slideUp("200");
+        $(this).next().slideUp("200", function(){
+          _this.renderYesNoQuestion("remove");
+        });
       }
     });
 
@@ -26,9 +30,15 @@ var builder = {
       var selectedItem = $(this).text();
       $(this).parent().prev().prev().text(selectedItem);
       console.log('load the question form...');
-
     });
+  },
 
-
+  renderYesNoQuestion: function(action) {
+    if (action === 'add') {
+      $('.panel-child-container').append(_.template($('#yes-no-question').html())); 
+    } else if (action === 'remove') {
+      $('.yesno-template').remove();
+    }
   }
+
 }
