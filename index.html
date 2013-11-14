@@ -105,42 +105,6 @@
 
           <!-- child panel container -->
           <div class="panel panel-child-container">
-
-            <div class="panel-header">
-              <span class="glyphicon glyphicon-remove"></span>
-              <div class="question-title">
-                <p>Title</p>
-                <span class="glyphicon glyphicon-pencil"></span>
-              </div>
-            </div>
-
-            <div class="question-template">
-              <div class="arrow-up"></div>
-
-              <div class="dropdown-header">
-
-                <!-- Question Dropdown Menu -->
-                <div class="btn-group">
-                  <button type="button" class="btn btn-default">Add Question</button>
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Header Text</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Menu of Steps</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Yes-No Question</a></li>
-                  </ul>
-                </div>
-
-              </div> <!--end of dropdown-header -->
-
-              <div class="question-builder-container">
-                <div class="no-question"><p>Select a question.</p></div>
-              </div>
-            </div> <!-- end of question-template -->
           </div> <!-- end of panel-child-container -->
         </div> <!-- end of panel-question -->
 
@@ -163,38 +127,46 @@
       });
     </script>
 
-    <script id="yes-no-question" type="text/html">
-      <div class="yesno-template">
-        <div class="panel-header">
-          <span class="glyphicon glyphicon-remove"></span>
-          <div class="question-title">
-            <p>Title</p>
-            <span class="glyphicon glyphicon-pencil"></span>
-          </div>
+    <script id="panel-header-template" type="text/html">
+      <div class="panel-header">
+        <span class="glyphicon glyphicon-remove"></span>
+        <div class="question-title">
+          <p>Title</p>
+          <span class="glyphicon glyphicon-pencil"></span>
         </div>
+      </div>
+    </script>
+
+    <script id="question-menu-template" type="text/html">
+      <div class="arrow-up"></div>
+      <div class="dropdown-header">
+        <div class="required-check">
+          <input type="checkbox" name="required" value="required"><span>Required</span>
+        </div>
+        <!-- Question Dropdown Menu -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-default">Add Question</button>
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Header Text</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Menu of Steps</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Yes-No Question</a></li>
+          </ul>
+        </div>
+        <button type="submit" class="btn btn-default preview">Preview</button>
+      </div> <!--end of dropdown-header -->
+    </script>
+
+    <script id="yes-no-question-template" type="text/html">
+      <div class="yesno-template">
+        <% include panel-header-template %>
         <div class="question-template">
-          <div class="arrow-up"></div>
-          <div class="dropdown-header">
-            <div class="required-check">
-              <input type="checkbox" name="required" value="required"><span>Required</span>
-            </div>
-            <!-- Question Dropdown Menu -->
-            <div class="btn-group">
-              <button type="button" class="btn btn-default">Add Question</button>
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Header Text</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Menu of Steps</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Yes-No Question</a></li>
-              </ul>
-            </div>
-            <button type="submit" class="btn btn-default preview">Preview</button>
-          </div> <!--end of dropdown-header -->
+          <% include question-menu-template %>
           <div class="question-builder-container">
             <label>Prompt:</label>
             <input type="text" class="form-control" placeholder="">
@@ -205,6 +177,18 @@
             </ul>
           </div>
         </div> <!-- end of question-template -->
+      </div> <!-- end of yesno-template -->
+    </script>
+
+    <script id="select-question-template" type="text/html">
+      <div class="question-template">
+        <% include panel-header-template %> 
+        <div class="question-template">
+          <% include question-menu-template %>
+          <div class="question-builder-container">
+            <div class="no-question"><p>Select a question.</p></div>
+          </div>
+        </div>
       </div>
     </script>
 
