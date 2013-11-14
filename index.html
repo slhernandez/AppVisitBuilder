@@ -54,62 +54,14 @@
         <h3>Exam</h3>
       </div>
 
-
-      <div class="panel panel-default">
-        <div class="panel-body question-select-container">
-
-          <div class="required-check">
-            <input type="checkbox" name="required" value="required"><span>Required</span>
-          </div>
-
-          <!-- Question Dropdown Menu -->
-          <div class="btn-group">
-            <button type="button" class="btn btn-default question-label">Add Question</button>
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-              <span class="caret"></span>
-              <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Header Text</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Menu of Steps</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Yes-No Question</a></li>
-            </ul>
-          </div>
-
-          <button type="submit" class="btn btn-default preview">Preview</button>
-
-        </div> <!-- end of panel body -->
+      <div class="panel panel-default work-heading">
       </div> <!-- end of panel -->
 
-      <div class="panel panel-default">
-        <div class="panel-body panel-question">
-
-          <label>Enter your question:</label>
-          <input type="text" class="form-control" placeholder="">
-
-          <div class="btn-yes">
-            <p>Yes</p>
-            <span class="glyphicon glyphicon-arrow-right"></span> 
-          </div>
-
-          <!-- child panel container -->
-          <div class="panel panel-child-container">
-          </div> <!-- end of panel-child-container -->
-
-          <div class="btn-no">
-            <p>No</p>
-            <span class="glyphicon glyphicon-arrow-right"></span> 
-          </div>
-
-          <!-- child panel container -->
-          <div class="panel panel-child-container">
-          </div> <!-- end of panel-child-container -->
-        </div> <!-- end of panel-question -->
-
+      <div class="panel panel-default work-container">
       </div> <!-- end of panel -->
+
       <div class="add-question-container"><button type="submit" class="btn btn-default add-question">Add Another Question</button></div>
+
     </div><!-- end question-container -->
 
 
@@ -127,7 +79,13 @@
       });
     </script>
 
-    <script id="panel-header-template" type="text/html">
+    <script id="parent-panel-header-template" type="text/html">
+      <div class="question-header-parent">
+        <h3>Exam</h3>
+      </div>
+    </script>
+
+    <script id="child-panel-header-template" type="text/html">
       <div class="panel-header">
         <span class="glyphicon glyphicon-remove"></span>
         <div class="question-title">
@@ -137,7 +95,31 @@
       </div>
     </script>
 
-    <script id="question-menu-template" type="text/html">
+    <script id="parent-question-menu-template" type="text/html">
+     <div class="panel-body question-select-container">
+        <div class="required-check">
+          <input type="checkbox" name="required" value="required"><span>Required</span>
+        </div>
+        <!-- Question Dropdown Menu -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-default question-label">Add Question</button>
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Header Text</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Menu of Steps</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Yes-No Question</a></li>
+          </ul>
+        </div>
+        <button type="submit" class="btn btn-default preview">Preview</button>
+      </div> <!-- end of panel body -->
+    </script>
+
+    <script id="child-question-menu-template" type="text/html">
       <div class="arrow-up"></div>
       <div class="dropdown-header">
         <div class="required-check">
@@ -162,32 +144,86 @@
       </div> <!--end of dropdown-header -->
     </script>
 
-    <script id="yes-no-question-template" type="text/html">
-      <div class="yesno-template">
-        <% include panel-header-template %>
+    <script id="parent-question-container-template" type="text/html">
+      <div class="parent-question-container-template">
         <div class="question-template">
-          <% include question-menu-template %>
-          <div class="question-builder-container">
-            <label>Prompt:</label>
+        </div>
+      </div>
+    </script>
+
+    <script id="child-question-container-template" type="text/html">
+      <div class="child-question-container-template">
+        <% include child-panel-header-template %>
+        <div class="question-template">
+          <% include child-question-menu-template %>
+        </div>
+      </div> 
+    </script>
+
+    <script id="yes-no-question-template" type="text/html">
+      <div class="yes-no-template">
+
+
+          <div class="panel-body panel-question">
+            <label>Enter your question:</label>
             <input type="text" class="form-control" placeholder="">
-            <ul class="list-group">
-              <li class="list-group-item">Name of Step 1 <span class="glyphicon glyphicon-arrow-right"></span></li>
-              <li class="list-group-item">Name of Step 2 <span class="glyphicon glyphicon-arrow-right"></span></li>
-              <li class="list-group-item">Click to add another item</li>
-            </ul>
-          </div>
-        </div> <!-- end of question-template -->
+            <div class="btn-yes">
+              <p>Yes</p>
+              <span class="glyphicon glyphicon-arrow-right"></span> 
+            </div>
+
+            <!-- child panel container -->
+            <div class="panel panel-child-container">
+            </div> <!-- end of panel-child-container -->
+
+            <div class="btn-no">
+              <p>No</p>
+              <span class="glyphicon glyphicon-arrow-right"></span> 
+            </div>
+
+            <!-- child panel container -->
+            <div class="panel panel-child-container">
+            </div> <!-- end of panel-child-container -->
+
+          </div> <!-- end of panel-question -->
+
+
       </div> <!-- end of yesno-template -->
     </script>
 
+    <script id="menu-of-steps-template" type="text/html">
+      <div class="menu-of-steps-template">
+        <div class="question-builder-container">
+          <label>Prompt:</label>
+          <input type="text" class="form-control" placeholder="">
+          <ul class="list-group">
+            <li class="list-group-item">Name of Step 1 <span class="glyphicon glyphicon-arrow-right"></span></li>
+
+            <!-- child panel container -->
+            <div class="panel panel-child-container">
+            </div> <!-- end of panel-child-container -->
+
+            <li class="list-group-item">Name of Step 2 <span class="glyphicon glyphicon-arrow-right"></span></li>
+
+            <!-- child panel container -->
+            <div class="panel panel-child-container">
+            </div> <!-- end of panel-child-container -->
+
+            <li class="list-group-item">Click to add another item</li>
+
+            <!-- child panel container -->
+            <div class="panel panel-child-container">
+            </div> <!-- end of panel-child-container -->
+
+          </ul>
+        </div>
+      </div>
+    </script>
+
     <script id="select-question-template" type="text/html">
-      <div class="question-template">
-        <% include panel-header-template %> 
-        <div class="question-template">
-          <% include question-menu-template %>
-          <div class="question-builder-container">
-            <div class="no-question"><p>Select a question.</p></div>
-          </div>
+      <div class="select-question-template">
+        <div class="question-builder-container">
+          <div class="no-question"><p>Select a question.</p></div>
         </div>
       </div>
     </script>

@@ -231,7 +231,7 @@
 }
 
 .question-builder-container {
-  border-left: 5px solid #66B8FF;
+  /*border-left: 5px solid #66B8FF;*/
   padding: 20px 0;
   margin: 0 auto;
   min-height: 300px;
@@ -285,3 +285,8 @@
   color: #999;
   text-shadow: 0 1px 0 rgba(0,0,0,0.1); 
 }
+
+.yes-no-template {
+  text-align: left;
+}
+
