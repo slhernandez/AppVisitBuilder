@@ -16,31 +16,28 @@ var builder = {
     $('.work-container').on('click', '.btn-yes', function(e) {
       if ( $(this).next().is(':hidden') ) {
         // load child question template
-        //_this.renderYesNoQuestion("add", $(this));
         _this.renderChildQuestionContainer("add", $(this));
         $(this).next().slideDown("200");
       } else {
         $(this).next().slideUp("200", function(){
-        //_this.renderYesNoQuestion("remove", $(this));
+          _this.renderChildQuestionContainer("remove", $(this));
         });
       }
     });
 
     $('.work-container').on('click', '.btn-no', function(e) {
       if ( $(this).next().is(':hidden') ) {
-        _this.renderSelectQuestion("add", $(this));
+        _this.renderChildQuestionContainer("add", $(this));
         $(this).next().slideDown("200");
       } else {
         $(this).next().slideUp("200");
-        _this.renderSelectQuestion("remove", $(this));
+        _this.renderChildQuestionContainer("remove", $(this));
       }
     });
 
     // Click event for the dropdown menu 
     // Parent Question selection
     $('.work-heading').on('click', '.dropdown-menu li', function(e) {
-
-
       e.preventDefault();
       console.log('selected ', $(this).text());
       // Update button label
@@ -48,7 +45,6 @@ var builder = {
       $(this).parent().prev().prev().text(selectedItem);
       console.log('load the question form...');
       _this.renderParentQuestion(_this.questionTemplate[selectedItem], $(this));
-
     });
 
     // Initialize the page with a parent question container
@@ -68,22 +64,17 @@ var builder = {
   },
 
   renderChildQuestionContainer: function(action, context) {
-    var $childPanel = context.next('.panel-child-container');
     if (action === 'add') {
+      var $childPanel = context.next('.panel-child-container');
       $childPanel.append(this.template($('#child-question-container-template').html()));
       $childPanel.append(this.template($('#select-question-template').html()));
-
-    } else if (action === 'hide') {
-    }
-  },
-
-  renderYesNoQuestion: function(action, context) {
-    if (action === 'add') {
-      var $panel = context.next('.panel-child-container');
-      $panel.append(this.template($('#yes-no-question-template').html())); 
     } else if (action === 'remove') {
-      var $panel = context;
-      $panel.find('.yesno-template').remove();
+      if ( context.hasClass('btn-no') ) {
+        var $childPanel = context.next('.panel-child-container');
+      } else {
+        var $childPanel = context;
+      }
+      $childPanel.empty();
     }
   },
 
