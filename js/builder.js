@@ -35,8 +35,8 @@ var builder = {
       }
     });
 
-    // Click event for the dropdown menu 
-    // Parent Question selection
+    // Click event for the Parent Question dropdown menu 
+    // Parent question selection
     $('.work-heading').on('click', '.dropdown-menu li', function(e) {
       e.preventDefault();
       console.log('selected ', $(this).text());
@@ -45,6 +45,17 @@ var builder = {
       $(this).parent().prev().prev().text(selectedItem);
       console.log('load the question form...');
       _this.renderParentQuestion(_this.questionTemplate[selectedItem], $(this));
+    });
+
+    // Click event for the child question dropdown menu
+    // Child question selection
+    $('.work-container').on('click', '.dropdown-menu li', function(e) {
+      e.preventDefault();
+      console.log('selected', $(this).text());
+      // Update button label
+      var selectedItem = $(this).text();
+      $(this).parent().prev().prev().text(selectedItem);
+      _this.renderChildQuestion(_this.questionTemplate[selectedItem], $(this));
     });
 
     // Initialize the page with a parent question container
@@ -67,7 +78,7 @@ var builder = {
     if (action === 'add') {
       var $childPanel = context.next('.panel-child-container');
       $childPanel.append(this.template($('#child-question-container-template').html()));
-      $childPanel.append(this.template($('#select-question-template').html()));
+      $childPanel.find('.question-template').append(this.template($('#select-question-template').html()));
     } else if (action === 'remove') {
       if ( context.hasClass('btn-no') ) {
         var $childPanel = context.next('.panel-child-container');
@@ -76,6 +87,13 @@ var builder = {
       }
       $childPanel.empty();
     }
+  },
+
+  renderChildQuestion: function(questionTemplate, context) {
+      var $childTarget = context.closest('.panel-child-container');
+      console.log('childTarget ...', $childTarget);
+      $childTarget.find('.question-template').empty();
+      $childTarget.find('.question-template').append(this.template($('#'+questionTemplate).html()));
   },
 
   renderSelectQuestion: function(action, context) {
