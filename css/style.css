@@ -124,7 +124,7 @@
 }
 
 .panel-question {
-  margin: 20px auto 0 auto;
+  margin: 0 auto 0 auto;
   width: 92%;
 }
 
@@ -204,7 +204,7 @@
   font-size: 16px;
   display: inline-block;
   margin-bottom: 0;
-  width: 250px;
+  min-width: 100px;
   margin-left: 10px;
 }
 
@@ -231,12 +231,12 @@
   left: 50%;
 }
 
-.question-builder-container {
+.question-builder-container,
+.preview-question-container {
   /*border-left: 5px solid #66B8FF;*/
   padding: 20px 0;
   margin: 0 auto;
   min-height: 300px;
-  background: #ffffff;
   text-align: left;
 }
 
@@ -269,6 +269,7 @@
 }
 
 .question-builder-container .list-group span {
+  color: #0088CC;
   float: right;
 }
 
@@ -276,12 +277,16 @@
   margin: 40px 0;
 }
 
-.no-question {
+
+
+.no-question,
+.preview-area {
   text-align: center;
   padding-top: 100px;
 }
 
-.no-question p {
+.no-question p,
+.preview-area p {
   font-size: 20px;
   color: #999;
   text-shadow: 0 1px 0 rgba(0,0,0,0.1); 
@@ -291,3 +296,89 @@
   text-align: left;
 }
 
+.panel-child-container .question-template {
+  border-left: 5px solid #66B8FF;
+}
+
+/* Override menu highlighting */
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+  color: #FFF;
+  background-color: #0088CC;
+  transition: all 100ms linear;
+}
+
+
+/* Flip card CSS */
+.flip-container {
+    -webkit-perspective: 1000;
+    -moz-perspective: 1000;
+    -o-perspective: 1000;
+    perspective: 1000;
+}
+
+.flip-container, .front, .back {
+    width: 100%;
+    height: 100%;
+}
+
+.flipper {
+    -moz-transform: perspective(1000px);
+    -moz-transform-style: preserve-3d;
+
+    position: relative;
+}
+
+.front, .back {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+    -webkit-transition: 0.6s;
+    -webkit-transform-style: preserve-3d;
+
+    -moz-transition: 0.6s;
+    -moz-transform-style: preserve-3d;
+
+    -o-transition: 0.6s;
+    -o-transform-style: preserve-3d;
+
+    -ms-transition: 0.6s;
+    -ms-transform-style: preserve-3d;
+
+    transition: 0.6s;
+    transform-style: preserve-3d;
+
+
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.back {
+    -webkit-transform: rotateY(-180deg);
+    -moz-transform: rotateY(-180deg);
+    -o-transform: rotateY(-180deg);
+    -ms-transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
+}
+
+.flip-container.hover .back {
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    -o-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+}
+
+.flip-container.hover .front {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+
+.front {
+    z-index: 2;
+}

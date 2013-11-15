@@ -66,12 +66,16 @@ var builder = {
     $('.work-heading').append(this.template($('#parent-question-menu-template').html()));    
     $('.work-container').append(this.template($('#parent-question-container-template').html()));
     $('.work-container .question-template').append(this.template($('#select-question-template').html()));
+
+    $('.preview-heading').append(this.template($('#parent-question-menu-template').html()));
+    $('.preview-container').append(this.template($('#parent-question-container-template').html()));
+    $('.preview-container .question-template').append(this.template($('#preview-question-template').html()));
   },
 
   renderParentQuestion: function(questionTemplate, context) {
-    var $questionTarget = context.closest('.work-heading').next();
-    $questionTarget.find('.question-template').empty();
-    $questionTarget.find('.question-template').append(this.template($('#'+questionTemplate).html()));
+    var $builderTarget = context.closest('.work-heading').next();
+    $builderTarget.find('.question-template').empty();
+    $builderTarget.find('.question-template').append(this.template($('#'+questionTemplate).html()));
   },
 
   renderChildQuestionContainer: function(action, context) {
