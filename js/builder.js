@@ -12,7 +12,7 @@ var builder = {
 
     var _this = this;
 
-    // Setup click events
+    // Setup click events - YES button
     $('.work-container').on('click', '.btn-yes', function(e) {
       if ( $(this).next().is(':hidden') ) {
         // load child question template
@@ -25,6 +25,7 @@ var builder = {
       }
     });
 
+    // Setup click events - NO button
     $('.work-container').on('click', '.btn-no', function(e) {
       if ( $(this).next().is(':hidden') ) {
         _this.renderChildQuestionContainer("add", $(this));
@@ -35,15 +36,32 @@ var builder = {
       }
     });
 
+    // Setup click events for single group list
+    $('.work-container').on('click', '.list-group .list-group-item', function(e) {
+
+        if ($(this).hasClass('list-add-item')) {
+          // TODO:
+          // we are going to do something else.
+          console.log('add another list item entry.');
+          return
+        }
+
+        if ( $(this).next().is(':hidden') ) {
+          _this.renderChildQuestionContainer("add", $(this));
+          $(this).next().slideDown("200");
+        } else {
+          $(this).next().slideUp("200");
+          _this.renderChildQuestionContainer("remove", $(this));
+        }
+    });
+
     // Click event for the Parent Question dropdown menu 
     // Parent question selection
     $('.work-heading').on('click', '.dropdown-menu li', function(e) {
       e.preventDefault();
-      console.log('selected ', $(this).text());
       // Update button label
       var selectedItem = $(this).text();
       $(this).parent().prev().prev().text(selectedItem);
-      console.log('load the question form...');
       _this.renderParentQuestion(_this.questionTemplate[selectedItem], $(this));
     });
 
@@ -51,7 +69,6 @@ var builder = {
     // Child question selection
     $('.work-container').on('click', '.dropdown-menu li', function(e) {
       e.preventDefault();
-      console.log('selected', $(this).text());
       // Update button label
       var selectedItem = $(this).text();
       $(this).parent().prev().prev().text(selectedItem);
@@ -67,7 +84,7 @@ var builder = {
     $('.work-container').append(this.template($('#parent-question-container-template').html()));
     $('.work-container .question-template').append(this.template($('#select-question-template').html()));
 
-    $('.preview-heading').append(this.template($('#parent-question-menu-template').html()));
+    $('.preview-heading').append(this.template($('#preview-heading-template').html()));
     $('.preview-container').append(this.template($('#parent-question-container-template').html()));
     $('.preview-container .question-template').append(this.template($('#preview-question-template').html()));
   },
@@ -86,6 +103,8 @@ var builder = {
     } else if (action === 'remove') {
       if ( context.hasClass('btn-no') ) {
         var $childPanel = context.next('.panel-child-container');
+      } else if (context.hasClass('list-group-item')) {
+        var $childPanel = context.next();
       } else {
         var $childPanel = context;
       }
@@ -95,7 +114,6 @@ var builder = {
 
   renderChildQuestion: function(questionTemplate, context) {
       var $childTarget = context.closest('.panel-child-container');
-      console.log('childTarget ...', $childTarget);
       $childTarget.find('.question-template').empty();
       $childTarget.find('.question-template').append(this.template($('#'+questionTemplate).html()));
   },
