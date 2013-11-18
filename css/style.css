@@ -329,8 +329,36 @@
   color: #898989;
 }
 
+.preview-container p {
+  margin: 0;
+  padding: 0;
+}
+
 .preview-container.panel-default {
   background: #FFF;
+}
+
+.preview-container .btn-yes-preview,
+.preview-container .btn-no-preview {
+  color: #FFF;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#0087CC), to(#0043CC));;
+  border: 1px solid #002A80;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 5px;
+  width: 100%;
+}
+
+.preview-container .btn-yes-preview p,
+.preview-container .btn-no-preview p {
+  font-size: 20px;
+}
+
+.preview-container .preview-question {
+  color: #333;
+  font-size: 24px;
+  margin: 40px 0;
+  text-align: center;
 }
 
 /* 
