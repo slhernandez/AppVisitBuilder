@@ -2,9 +2,14 @@
  * Navbar CSS markup.
  */
 
- * {
+* {
   box-sizing: border-box;
- }
+}
+
+.main-container {
+  margin: 0 auto;
+  width: 800px;
+}
 
 .navbar {
   margin-bottom: 40px;
@@ -47,7 +52,7 @@
 }
 
 .question-container {
-  margin: 100px auto;
+  margin: 20px auto 40px auto;
   width: 800px;
 }
 
@@ -56,13 +61,53 @@
 }
 
 .question-header-parent {
+  margin: 100px auto 20px auto;
   background: #006DCC;
 }
 
-.question-container h3 {
+.exam-header-title {
+  display: block;
+  padding: 10px 0 10px 10px;
+}
+
+.question-header-parent .glyphicon-pencil {
+  cursor: pointer;
+  display: inline-block;
   color: #FFF;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.question-header-parent .glyphicon-pencil:hover {
+  color: #f3f3f3;
+  transition: all 300ms linear;
+}
+
+.question-header-parent h3 {
+  color: #FFF;
+  display: inline-block;
   font-weight: 400;
-  padding: 10px;
+  margin: 0;
+}
+
+.exam-edit-title {
+  display: none;
+  position: relative;
+  padding: 10px 0 10px 10px;
+}
+
+.exam-edit-title .form-control {
+  display: inline-block;
+  width: 80%;
+}
+
+.exam-edit-title .exam-title-edit-btn {
+  display: inline-block;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#F3F3F3));;
+  border: 1px solid #CCC;
+  padding: 4px 10px;
+  position: relative;
+  right: 62px;
 }
 
 .question-select-container {
@@ -98,7 +143,22 @@
 
 .panel-child-container .required-check span {
   left: 25px;
-  top: -2px;
+  top: 2px;
+}
+
+.question-select-container .glyphicon-trash {
+  display: none;
+  color: #555;
+  cursor: pointer;
+  font-size: 20px;
+  position: absolute;
+  top: 20px;
+  right: 25px;
+}
+
+.question-select-container .glyphicon-trash:hover {
+  color: #ec394d;
+  transition: all 300ms linear;
 }
 
 
@@ -177,21 +237,36 @@
  * Child Panel Question Markup
  */
 
- .dropdown-header .preview {
+.dropdown-header .preview {
   float: right;
   margin-right: 10px;
- }
+}
 
- .panel-child-container {
+.dropdown-header .glyphicon-trash {
+  cursor: pointer;
+  position: absolute;
+  top: 26px;
+  right: 30px;
+  font-size: 20px;
+  color: #999;
+}
+
+.dropdown-header .glyphicon-trash:hover {
+  color: #ec394d;
+  transition: all 300ms linear;
+}
+
+.panel-child-container {
   display: none;
- }
+}
 
- .panel-child-container.panel {
+.panel-child-container.panel {
   border-width: 0;
- }
+}
 
 .panel-child-container .panel-header {
   background-color: #66B8FF;
+  height: 30px;
   padding: 5px;
   position: relative;
 }
@@ -203,10 +278,26 @@
 
 .question-title {
   background: #007FEE;
+  height: 30px;
   position: absolute;
   top: 0px;
   right: 0px;
   padding: 4px;
+}
+
+.question-title .qtitle {
+  display: block;
+}
+
+.question-title .question-btn {
+  display: none;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#F3F3F3));
+  border: 1px solid #ccc;
+  font-size: 11px;
+  padding: 1px 6px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
 
 .question-title p {
@@ -214,13 +305,30 @@
   font-size: 16px;
   display: inline-block;
   margin-bottom: 0;
-  min-width: 100px;
-  margin-left: 10px;
+  /*min-width: 100px;*/
+  width: 100%;
+  margin-right: 30px;
+  padding-left: 10px;
 }
 
 .question-title span {
   color: #FFF;
   font-size: 16px;
+}
+
+.question-title input.form-control  {
+  display: none;
+  height: 22px;
+  width: 100%;
+  margin-right: 25px;
+}
+
+.question-title span.glyphicon-pencil {
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  top: 8px;
+  right: 7px;
 }
 
 .question-template, 
@@ -251,7 +359,10 @@
 }
 
 .question-builder-container label {
-  margin-left: 80px;
+  width: 85%;
+  padding: 10px 0;
+  margin: 0 auto;
+  display: block;
 }
 
 .question-builder-container input {
@@ -263,6 +374,46 @@
   padding: 20px 0;
   border-bottom: 1px solid #EEE;
   border-left: 5px solid #66B8FF;
+}
+
+/* Add child question button */
+.panel-child-container .add-child-question-container {
+  background: #f3f3f3;
+  border-top: 1px solid #EEE;
+}
+
+.panel-child-container .add-child-question-container .add-child-question-btn {
+  /*background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#F3F3F3));*/
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#bbb));
+  background-image: -moz-linear-gradient(0 100% 90deg, #bbb, #fff);
+  background-color: #fff;
+  border: none;
+  border-radius: 0;
+  color: #444;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.1);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.85);
+  width: 100%;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0,5);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 12px rgba(51, 204, 255, 0.2);
+  }
+  50% {
+    -webkit-box-shadow: 0 0 12px rgba(51, 204, 255, 0.9);
+  }
+  100% {
+    -webkit-box-shadow: 0 0 12px rgba(51, 204, 255, 0.2);
+  }
+
+}
+
+.panel-child-container .add-child-question-container .add-child-question-btn:focus,
+.panel-child-container .add-child-question-container .add-child-question-btn:hover {
+  -webkit-animation: pulse 1.5s infinite ease-in-out;
 }
 
 .question-builder-container .list-group {
@@ -279,12 +430,23 @@
   transition: all 300ms linear;
 }
 
-.question-builder-container .list-group span {
+.menu-of-steps-template .question-builder-container .list-group span.glyphicon-arrow-right {
   color: #0088CC;
+}
+
+.menu-of-steps-template .question-builder-container .list-group .glyphicon-pencil,
+.menu-of-steps-template .question-builder-container .list-group .glyphicon-remove {
+  color: #FFF;
+}
+
+.question-builder-container .list-group span {
+  /*color: #0088CC;*/
   /*float: right;*/
 }
 
 .add-question-container {
+  margin: 0 auto;
+  width: 800px;
   padding: 40px 0;
 }
 
@@ -309,6 +471,65 @@
   border-left: 5px solid #66B8FF;
 }
 
+/* Header Text Markup */
+label.header-text {
+  margin: 60px 0 0 60px;
+  padding-bottom: 10px;
+}
+
+.preview-container p.header-text {
+  margin-top: 60px;
+  font-size: 20px;
+  text-align: center;
+}
+
+/* Text box reply */
+.text-box-template textarea {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.text-box-template .glyphicon-pencil {
+  cursor: pointer;
+  margin-left: 5px;
+  position: absolute;
+  right: 10px;
+  top: 15px;
+}
+
+.text-box-template .glyphicon-pencil:hover {
+  color: #006DCC;
+  transition: all 300ms linear;
+}
+
+.text-box-label-controls {
+  width: 60%;
+  margin: 30px auto 0 auto;
+  position: relative;
+}
+
+.text-box-label-controls .header-text {
+  margin: 0;
+}
+
+.text-box-label-controls .form-control {
+  position: relative;
+  display:none;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 15px;
+}
+
+.text-box-label-btn {
+  display: none;
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#F3F3F3));;
+  padding: 3px 10px;
+  border: 1px solid #EEE;
+}
+
 /* Override menu highlighting */
 .dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
   color: #FFF;
@@ -317,6 +538,16 @@
 }
 
 /* Preview container styles */
+
+.preview-container .panel-child-container {
+  margin: 20px 0;
+  border: 1px solid #CCC;
+}
+
+.preview-container .panel-child-container .question-template {
+  border: none; 
+}
+
 .preview-heading {
   background: #FFF;
 }
@@ -361,6 +592,10 @@
   text-align: center;
 }
 
+.panel-child-container .btn.preview {
+  display: none;
+}
+
 /* 
  * Flip card CSS 
  */
@@ -398,9 +633,9 @@
   -ms-transform-style: preserve-3d;
   transition: 0.6s;
   transform-style: preserve-3d;
-  position: absolute;
+  /*position: absolute;
   top: 0;
-  left: 0;
+  left: 0;*/
 }
 
 .back {

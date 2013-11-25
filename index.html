@@ -15,11 +15,11 @@
     <![endif]-->
   </head>
   <body>
-
+    <div class="main-container"></div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.js"></script>
     <script src="js/underscore-min.js"></script>
     <!-- Custom JavaScript -->
     <script type="text/javascript" src="js/builder.js"></script>
@@ -63,28 +63,42 @@
       </div> <!-- navbar -->
     </script>
 
+    <script id="question-exam-header-template" type="text/html">
+      <div class="question-header-parent">
+        <div class="exam-header-title">
+          <h3>Exam</h3>
+          <span class="glyphicon glyphicon-pencil"></span>
+        </div>
+        <div class="exam-edit-title">
+          <input type="text" class="form-control" placeholder="Exam">
+            <button class="btn exam-title-edit-btn">Done</button>
+          </input>
+        </div>
+      </div>
+    </script>
+
     <script id="question-base-template" type="text/html">
       <div class="question-container">
-
-        <div class="question-header-parent">
-          <h3>Exam</h3>
-        </div>
-
         <div class="flip-container" id="flip-toggle">
 
           <div class="flipper">
 
             <div class="front">
-                <div class="panel panel-default work-heading"></div> <!-- end of panel -->
-                <div class="panel panel-default work-container"></div> <!-- end of panel -->
-                <div class="add-question-container"><button type="submit" class="btn btn-default add-question">Add Another Question</button></div>
+                <div class="panel panel-default work-heading">
+                  <% include parent-question-menu-template %>
+                </div> <!-- end of panel -->
+                <div class="panel panel-default work-container">
+                  <% include parent-question-container-template %>
+                </div> <!-- end of panel -->
             </div> <!-- end of front -->
 
-            <div class="back">
-
-                <div class="panel panel-default preview-heading"></div> <!-- end of panel -->
-                <div class="panel panel-default preview-container"></div> <!-- end of panel -->
-
+            <div class="back" style="display:none">
+                <div class="panel panel-default preview-heading">
+                  <% include preview-heading-template %>
+                </div> <!-- end of panel -->
+                <div class="panel panel-default preview-container">
+                  <% include parent-question-container-template %>
+                </div> <!-- end of panel -->
             </div> <!-- end of back -->
 
           </div> <!-- end of flipper -->
@@ -92,6 +106,12 @@
         </div> <!-- end of flip-container -->
 
       </div> <!-- end question-container -->
+    </script>
+
+    <script id="add-another-question-template" type="text/html">
+      <div class="add-question-container">
+        <button type="submit" class="btn btn-default add-question">Add Another Question</button>
+      </div>
     </script>
 
     <script id="parent-panel-header-template" type="text/html">
@@ -102,9 +122,11 @@
 
     <script id="child-panel-header-template" type="text/html">
       <div class="panel-header">
-        <span class="glyphicon glyphicon-remove"></span>
+        <span style="display:none;" class="glyphicon glyphicon-remove"></span>
         <div class="question-title">
-          <p>Title</p>
+          <p class="qtitle">Title</p>
+          <input type="text" class="form-control" placeholder="Title"></input>
+          <button class="btn question-btn">Done</button>
           <span class="glyphicon glyphicon-pencil"></span>
         </div>
       </div>
@@ -117,7 +139,7 @@
         </div>
         <!-- Question Dropdown Menu -->
         <div class="btn-group">
-          <button type="button" class="btn btn-default question-label">Add Question</button>
+          <button type="button" class="btn btn-default question-label">Select Question Type</button>
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
@@ -128,9 +150,16 @@
             <li><a href="#">Menu of Steps</a></li>
             <li class="divider"></li>
             <li><a href="#">Yes-No Question</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Text Box Reply</a></li>
           </ul>
         </div>
-        <button type="submit" onclick="document.querySelector('#flip-toggle').classList.toggle('hover');" class="btn btn-default preview">Preview</button>
+        <!--<button type="submit" onclick="document.querySelector('#flip-toggle').classList.toggle('hover');" class="btn btn-default preview">Preview</button>-->
+        <% if (enableDelete) { %>
+          <span style="display:block" class="glyphicon glyphicon-trash"></span>
+        <% } else { %>
+          <span style="display:none;" class="glyphicon glyphicon-trash"></span>
+        <% } %>
       </div> <!-- end of panel body -->
     </script>
 
@@ -149,7 +178,7 @@
         </div>
         <!-- Question Dropdown Menu -->
         <div class="btn-group">
-          <button type="button" class="btn btn-default">Add Question</button>
+          <button type="button" class="btn btn-default">Select Question Type</button>
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
@@ -160,16 +189,24 @@
             <li><a href="#">Menu of Steps</a></li>
             <li class="divider"></li>
             <li><a href="#">Yes-No Question</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Text Box Reply</a></li>
           </ul>
         </div>
         <button type="submit" class="btn btn-default preview">Preview</button>
+        <span class='glyphicon glyphicon-trash'></
       </div> <!--end of dropdown-header -->
     </script>
 
     <script id="parent-question-container-template" type="text/html">
       <div class="parent-question-container-template">
-        <div class="question-template">
-        </div>
+        <div class="question-template"></div>
+      </div>
+    </script>
+
+    <script id="add-child-question-template" type="text/html">
+      <div class="add-child-question-container">
+        <button type="submit" class="btn add-child-question-btn">Add Another Question</button>
       </div>
     </script>
 
@@ -180,6 +217,18 @@
           <% include child-question-menu-template %>
         </div>
       </div> 
+      <div class="question-template"></div>
+      <% include add-child-question-template %>
+    </script>
+
+    <script id="add-child-question-template" type="text/html">
+      <div class="add-child-question-container">
+        <button type="submit" class="btn add-child-question-btn">Add Another Question</button>
+      </div>
+    </script>
+
+    <script id="child-question-container-template-preview" type="text/html">
+      <div class="child-question-container-template-preview"></div> 
       <div class="question-template"></div>
     </script>
 
@@ -212,13 +261,13 @@
           <label>Prompt:</label>
           <input type="text" class="form-control" placeholder="">
           <ul class="list-group">
-            <li class="list-group-item">Name of Step 1 <span class="glyphicon glyphicon-arrow-right"></span></li>
+            <li class="list-group-item" data-step="step-1">Name of Step 1 <span class="glyphicon glyphicon-arrow-right"></span></li>
 
             <!-- child panel container -->
             <div class="panel panel-child-container">
             </div> <!-- end of panel-child-container -->
 
-            <li class="list-group-item">Name of Step 2 <span class="glyphicon glyphicon-arrow-right"></span></li>
+            <li class="list-group-item" data-step="step-2">Name of Step 2 <span class="glyphicon glyphicon-arrow-right"></span></li>
 
             <!-- child panel container -->
             <div class="panel panel-child-container">
@@ -226,6 +275,47 @@
 
             <li class="list-group-item list-add-item">Click to add another item</li>
           </ul>
+        </div>
+      </div>
+    </script>
+
+    <script id="text-box-template" type="text/html">
+      <div class="text-box-template">
+        <div class="question-builder-container">
+          <div class="text-box-label-controls">
+            <label class="header-text">Describe expected entry to user here</label>
+            <span class="glyphicon glyphicon-pencil"></span>
+            <input type="text" class="form-control" placeholder="Describe expected entry to user here...">
+              <button class="btn text-box-label-btn">Done</button>
+            </input>
+          </div>
+          <textarea class="form-control" placeholder="Type text here..."></textarea>
+        </div>
+      </div>
+    </script>
+
+    <script id="text-box-template-preview" type="text/html">
+      <div class="text-box-template">
+        <div class="question-builder-container">
+          <label class="header-text">Describe expected entry to user here<span class="glyphicon glyphicon-pencil"></span></label>
+          <p>Type text here...</p>
+        </div>
+      </div>
+    </script>
+
+    <script id="header-text-template" type="text/html">
+      <div class="header-text-template">
+        <div class="question-builder-container">
+          <label class="header-text">Enter text for header / label</label>
+          <input type="text" class="form-control" placeholder="">
+        </div>
+      </div>
+    </script>
+
+    <script id="header-text-template-preview" type="text/html">
+      <div class="header-text-template">
+        <div class="question-builder-container">
+          <p class="header-text">Enter text for header / label</p>
         </div>
       </div>
     </script>
@@ -241,6 +331,12 @@
     <script id="preview-question-template" type="text/html">
       <div class="preview-question-container">
         <div class="preview-area"><p>Preview</p></div>
+      </div>
+    </script>
+
+    <script id="preview-question-template-preview" type="text/html">
+      <div class="preview-question-container">
+        <div class="preview-area"><p>Please select a question to preview.</p></div>
       </div>
     </script>
 
@@ -277,19 +373,18 @@
           <p class="preview-question">Prompt: (Please enter a question or statement)</label>
           <ul class="list-group">
 
-            <li class="list-group-item">Name of Step 1</li>
+            <li class="list-group-item preview" data-step="step-1">Name of Step 1</li>
 
             <!-- child panel container -->
             <div class="panel panel-child-container">
             </div> <!-- end of panel-child-container -->
 
-            <li class="list-group-item">Name of Step 2</li>
+            <li class="list-group-item preview" data-step="step-2">Name of Step 2</li>
 
             <!-- child panel container -->
             <div class="panel panel-child-container">
             </div> <!-- end of panel-child-container -->
 
-            <li class="list-group-item list-add-item">Click to add another item</li>
           </ul>
         </div>
 

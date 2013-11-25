@@ -5,8 +5,9 @@ var builder = {
     // Render template mapping  
     this.questionTemplate = {
       "Menu of Steps": "menu-of-steps-template",
-      "Header Text": "select-question-template",
+      "Header Text": "header-text-template",
       "Yes-No Question": "yes-no-question-template",
+      "Text Box Reply": "text-box-template",
       "Default": "select-question-template"
     }
 
@@ -14,31 +15,45 @@ var builder = {
 
     // Setup click events - YES button
     $('body').on('click', '.work-container .btn-yes', function(e) {
+      var $builderPanel = $(this).next();
+      var $previewPanel = $(this).closest('.flipper').find('.back').find('.btn-yes-preview').next();
       if ( $(this).next().is(':hidden') ) {
         // load child question template
-        _this.renderChildQuestionContainer("add", $(this));
-        $(this).next().slideDown("200");
+        _this.renderYesNoChildQuestionContainer("add", $(this));
+        $builderPanel.slideDown("200");
+        $previewPanel.slideDown("200");
       } else {
-        $(this).next().slideUp("200", function(){
-          _this.renderChildQuestionContainer("remove", $(this));
+        var btnContext = $(this);
+        $builderPanel.slideUp("200", function(){
+          _this.renderYesNoChildQuestionContainer("remove", btnContext);
         });
+        $previewPanel.slideUp("200");
       }
     });
 
     // Setup click events - NO button
     $('body').on('click', '.work-container .btn-no', function(e) {
+      var $builderPanel = $(this).next();
+      var $previewPanel = $(this).closest('.flipper').find('.back').find('.btn-no-preview').next();
       if ( $(this).next().is(':hidden') ) {
-        _this.renderChildQuestionContainer("add", $(this));
-        $(this).next().slideDown("200");
+        _this.renderYesNoChildQuestionContainer("add", $(this));
+        $builderPanel.slideDown("200");
+        $previewPanel.slideDown("200");
       } else {
-        $(this).next().slideUp("200");
-        _this.renderChildQuestionContainer("remove", $(this));
+        $builderPanel.slideUp("200");
+        $previewPanel.slideUp("200");
+        _this.renderYesNoChildQuestionContainer("remove", $(this));
       }
     });
 
     // Setup click events for single group list
     $('body').on('click', '.work-container .list-group .list-group-item', function(e) {
 
+        var listItemAttr = $(this).data('step');
+        var $builderPanel = $(this).next();
+        var $previewPanel = $(this).closest('.flipper').find('.back').find("[data-step='"+ listItemAttr +"']").next();
+
+        // This logic is for adding a new list-group-item (append to bottom of list group)
         if ($(this).hasClass('list-add-item')) {
           // TODO:
           // we are going to do something else.
@@ -46,12 +61,14 @@ var builder = {
           return
         }
 
-        if ( $(this).next().is(':hidden') ) {
-          _this.renderChildQuestionContainer("add", $(this));
-          $(this).next().slideDown("200");
+        if ( $builderPanel.is(':hidden') ) {
+          _this.renderMenuListChildQuestion("add", $(this));
+          $builderPanel.slideDown("200");
+          $previewPanel.slideDown("200");
         } else {
-          $(this).next().slideUp("200");
-          _this.renderChildQuestionContainer("remove", $(this));
+          $builderPanel.slideUp("200");
+          $previewPanel.slideUp("200");
+          _this.renderMenuListChildQuestion("remove", $(this));
         }
     });
 
@@ -76,40 +93,184 @@ var builder = {
       _this.renderChildQuestion(_this.questionTemplate[selectedItem], $(this));
     });
 
-    // Add Another Question click event 
-    $('body').on('click', '.add-question-container .add-question', function(e) {
+    // Click Event for edit title (question header)
+    $('body').on('click', '.question-title .glyphicon-pencil', function(e) {
       e.preventDefault();
-      alert('this worked!');
-      // Create a new 
+      var titleContainer = $(this).parent();
+      // Display input field
+      titleContainer.find('.form-control').show();
+      titleContainer.find('.question-btn').show();
+      // Hide the pencil icon and title
+      titleContainer.find('.qtitle').hide();
+      $(this).hide()
     });
 
+    // Click Event for "Done" button located in title input field.
+    $('body').on('click', '.question-title .question-btn', function(e) {
+      e.preventDefault();
+      var titleContainer = $(this).parent();
+      var titleEntry = titleContainer.find('.form-control').val();
+      var placeholderEntry = titleContainer.find('.form-control').attr('placeholder');
+      titleEntry = titleEntry === "" ? placeholderEntry : titleEntry;
+      // Populate the title entry with new value
+      titleContainer.find('.qtitle').text(titleEntry);
+      // Hide input field
+      titleContainer.find('.form-control').hide();
+      titleContainer.find('.question-btn').hide();
+      // Display title and glyphicon 
+      titleContainer.find('.qtitle').show();
+      titleContainer.find('.glyphicon-pencil').show();
+    });
+
+    // Click event for add another parent question
+    $('body').on('click', '.add-question-container .add-question', function(e) {
+      e.preventDefault();
+      console.log('Add Another Question here...');
+      // add question container
+      _this.renderQuestionBase(true);
+      // insert parent question container
+      _this.renderParentQuestionContainer();
+      // Turn on the option for deleting spawned parent questions.
+
+    });
+
+    // Click event for add another child question
+    $('body').on('click', '.panel-child-container .add-child-question-btn', function(e) {
+      e.preventDefault();
+      var $panelContainer = $(this).closest('.panel-child-container');
+      // Append a new question to current panel container.
+      $panelContainer.append(_this.template($('#child-question-container-template').html()));
+      $panelContainer.find('.question-template').each(function() {
+        if ($(this).children().length === 0) {
+          $(this).append(_this.template($('#select-question-template').html()));
+        }
+      });
+
+      // Hide the "Add Another Question" button that is attached
+      $(this).closest('.add-child-question-container').hide();
+    });
+
+    $('body').on('click', '.panel-child-container .glyphicon-trash', function(e){
+      e.preventDefault();
+      var $questionContainer = $(this).closest('.child-question-container-template');
+      var $panelContainer = $(this).closest('.panel-child-container');
+      $questionContainer.slideUp('200', function() {
+        $questionContainer.remove();
+        // Make sure the Add Another Question button is alway attached
+        // to the last child-question-container-template
+        if ($panelContainer.children().length === 0) {
+          $panelContainer.hide();
+          $panelContainer.slideUp("200");
+        }
+        $panelContainer.find('.child-question-container-template').last().find('.add-child-question-container').show();
+      });
+    });
+
+    // Click event for Trash button for parent questions
+    $('body').on('click', '.question-select-container .glyphicon-trash', function(e) {
+      e.preventDefault();
+      var $questionContainer = $(this).closest('.question-container');
+      $questionContainer.remove();
+    });
+
+    // Onclick event for text-box-template
+    $('body').on('click', '.text-box-template .glyphicon-pencil', function(e) {
+      e.preventDefault();
+      var $textLabel = $(this).closest('.text-box-label-controls');
+      $textLabel.find('.header-text').hide();
+      $textLabel.find('.glyphicon-pencil').hide();
+      $textLabel.find('.form-control').show();
+      $textLabel.find('.text-box-label-btn').show();
+    });
+
+    // Click event for done button (text-box-template)
+    $('body').on('click', '.text-box-template .text-box-label-btn', function(e) {
+      e.preventDefault();
+      $textControls = $(this).closest('.text-box-label-controls');
+      var entry = $textControls.find('.form-control').val();
+      var placeholderEntry = $textControls.find('.form-control').attr('placeholder');
+      entry = entry === "" ? placeholderEntry : entry;
+      $textControls.find('.header-text').text(entry);
+
+      $textControls.find('.form-control').hide();
+      $textControls.find('.text-box-label-btn').hide();
+      $textControls.find('.header-text').show();
+      $textControls.find('.glyphicon-pencil').show();
+    });
+
+    // Click event for editing the parent title
+    $('body').on('click', '.exam-header-title .glyphicon-pencil', function(e) {
+      e.preventDefault();
+      console.log('this works!');
+      $examTitle = $(this).closest('.question-header-parent').find('.exam-header-title');
+      $examEdit = $(this).closest('.question-header-parent').find('.exam-edit-title');
+      $examTitle.hide();
+      $examEdit.show();
+    });
+
+    $('body').on('click', '.exam-edit-title .exam-title-edit-btn', function(e) {
+      e.preventDefault();
+      $examTitle = $(this).closest('.question-header-parent').find('.exam-header-title');
+      $examEdit = $(this).closest('.question-header-parent').find('.exam-edit-title');
+
+      var entry = $examEdit.find('.form-control').val();
+      var placeholderEntry = $examEdit.find('.form-control').attr('placeholder');
+      console.log('entry is ...', entry);
+      entry = entry === "" ? placeholderEntry : entry;
+      $examTitle.find('h3').text(entry);
+      $examEdit.hide();
+      $examTitle.show();
+    });
+
+    // Let's begin to render the inital question on the page.
     // Render the navbar
     this.renderNavbar();
 
+    // Render the exam title header
+    this.renderExamHeader();
+
     // Render the question base markup
-    this.renderQuestionBase();
+    this.renderQuestionBase(false);
+
+    // Render "Add Another Question" button
+    this.renderAddAnotherQuestion();
 
     // Initialize the page with a parent question container
     this.renderParentQuestionContainer();
   },
 
   renderNavbar: function() {
-    $('body').append(this.template($('#navbar-template').html()));
+    $('body').prepend(this.template($('#navbar-template').html()));
   },
 
-  renderQuestionBase: function() {
-    $('body').append(this.template($('#question-base-template').html()));
+  renderExamHeader: function() {
+    $('.main-container').append(this.template($('#question-exam-header-template').html()));
   },
 
-  renderParentQuestionContainer: function(init) {
+  renderQuestionBase: function(enableDelete) {
+    $('.main-container').append(this.template( $('#question-base-template').html(), {enableDelete: enableDelete} ));
+  },
+
+  renderAddAnotherQuestion: function() {
+    $('body').append(this.template($('#add-another-question-template').html()));
+  },
+
+  renderParentQuestionContainer: function() {
     // Includes both rendering the builder and preview question containers.
-    $('.work-heading').append(this.template($('#parent-question-menu-template').html()));    
-    $('.work-container').append(this.template($('#parent-question-container-template').html()));
-    $('.work-container .question-template').append(this.template($('#select-question-template').html()));
+    var $questionTemplate = $('.work-container .question-template');
+    var _this = this;
+    $questionTemplate.each(function(item) { 
+      if ($(this).children().length === 0) {
+        $(this).append(_this.template($('#select-question-template').html()));
+      }
+    });
 
-    $('.preview-heading').append(this.template($('#preview-heading-template').html()));
-    $('.preview-container').append(this.template($('#parent-question-container-template').html()));
-    $('.preview-container .question-template').append(this.template($('#preview-question-template').html()));
+    var $previewTemplate = $('.preview-container .question-template');
+    $previewTemplate.each(function(item) { 
+      if ($(this).children().length === 0) {
+        $(this).append(_this.template($('#preview-question-template').html()));
+      }
+    });
   },
 
   renderParentQuestion: function(questionTemplate, context) {
@@ -129,30 +290,80 @@ var builder = {
 
   },
 
-  renderChildQuestionContainer: function(action, context) {
+  renderChildQuestion: function(questionTemplate, context) {
+    var $childTarget = context.closest('.child-question-container-template');
+    $childTarget.find('.question-template').empty();
+    $childTarget.find('.question-template').append(this.template($('#'+questionTemplate).html()));
+
+    // Which question template are we dealing with...
+    // This will allow us to tell which preview target to construct.
+
+    var previewTemplate = questionTemplate + '-preview';
+    if (questionTemplate === 'menu-of-steps-template') {
+
+      var listItemAttr = $childTarget.prev().data('step');
+      var $previewTarget = context.closest('.flipper').find('.back').find("[data-step='"+ listItemAttr +"']").next(); 
+      $previewTarget.find('.question-template').empty();
+      $previewTarget.find('.question-template').append(this.template($('#'+previewTemplate).html()));
+
+    } else if (questionTemplate === 'yes-no-question-template') {
+      // Is this the Yes or No button.    
+    }
+
+  },
+
+  renderYesNoChildQuestionContainer: function(action, context) {
+    var $builderChildPanel = context.next('.panel-child-container');
+
+    // Determine which button to display if context is from YES/NO buttons
+    if (context.hasClass('btn-no')) {
+      var $previewChildPanel = context.closest('.flipper').find('.back').find('.btn-no-preview').next();
+    } else if (context.hasClass('btn-yes')) {
+      var $previewChildPanel = context.closest('.flipper').find('.back').find('.btn-yes-preview').next();
+    } else {
+      // This is a list-item context 
+      var $previewChildPanel = context;
+    }
+
     if (action === 'add') {
-      var $childPanel = context.next('.panel-child-container');
-      $childPanel.append(this.template($('#child-question-container-template').html()));
-      $childPanel.find('.question-template').append(this.template($('#select-question-template').html()));
-    } else if (action === 'remove') {
-      if ( context.hasClass('btn-no') ) {
-        var $childPanel = context.next('.panel-child-container');
-      } else if (context.hasClass('list-group-item')) {
-        var $childPanel = context.next();
-      } else {
-        var $childPanel = context;
+      if (context.next().children().length === 0) {
+        $builderChildPanel.append(this.template($('#child-question-container-template').html()));
+        $builderChildPanel.find('.question-template').append(this.template($('#select-question-template').html()));
+
+        $previewChildPanel.append(this.template($('#child-question-container-template-preview').html()));
+        $previewChildPanel.find('.question-template').append(this.template($('#select-question-template').html()));
       }
-      $childPanel.empty();
+
+    } else if (action === 'remove') {
+      //$builderChildPanel.empty();
+      //$previewChildPanel.empty();
     }
   },
 
-  renderChildQuestion: function(questionTemplate, context) {
-      var $childTarget = context.closest('.panel-child-container');
-      $childTarget.find('.question-template').empty();
-      $childTarget.find('.question-template').append(this.template($('#'+questionTemplate).html()));
+  renderMenuListChildQuestion: function(action, context) {
+    var listItemAttr = context.data('step');
+    var $builderChildPanel = context.next();
+    var $previewChildPanel = context.closest('.flipper').find('.back').find("[data-step='"+ listItemAttr +"']").next();
+
+    if (action === 'add') {
+
+      // Only append the new child question if there are no contents in the panel-child-container.
+      if (context.next().children().length === 0) {
+        $builderChildPanel.append(this.template($('#child-question-container-template').html()));
+        $builderChildPanel.find('.question-template').append(this.template($('#select-question-template').html()));
+
+        // Render the question in preview mode
+        $previewChildPanel.append(this.template($('#child-question-container-template-preview').html()));
+        $previewChildPanel.find('.question-template').append(this.template($('#select-question-template').html()));
+      }
+
+    } else if (action === 'remove') {
+      //context.next().empty();
+    }
   },
 
   renderSelectQuestion: function(action, context) {
+    var dataStep = context.data('step');
     var $panel = context.next('.panel-child-container');
     if (action === 'add') {
       $panel.append(this.template($('#select-question-template').html()));
